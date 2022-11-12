@@ -3,6 +3,12 @@ import { NextApiResponse } from "next";
     fancy fetcher retrieved from https://us.forums.blizzard.com/en/blizzard/t/oauth2-client-credentials-implementations/131/4
     
 */
+type token = {
+    access_token: string,
+    token_type: string,
+    expires_in: number,
+    sub: string
+  }
 export default function createAccessToken(region = 'us') {
     return new Promise((resolve, reject) => {
         let credentials = Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);
@@ -24,7 +30,7 @@ export default function createAccessToken(region = 'us') {
                 responseData += chunk;
             });
             res.on('end', () => {
-                let data = JSON.parse(responseData);
+                let data: token = JSON.parse(responseData);
                 resolve(data);
             });
         }
