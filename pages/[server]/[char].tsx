@@ -9,10 +9,13 @@ import createAccessToken, { token } from "../../auth/auth";
 type goobIO = {
     totalScore: number,
     mythicScore: number,
-    mountScore: number 
-
+    mountScore: number,
+    characterName: string,
+    //character banner
+    characterBanner: string,
+    petScore: number
 }
-const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore }: goobIO) => {
+const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, characterName, characterBanner, petScore }: goobIO) => {
 
 
 
@@ -25,10 +28,13 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore }: go
             </Head>
 
             <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-                <h1>GoobIO</h1>
-                <h1>{mountScore}</h1>
-                <h1>{mythicScore}</h1>
+                <h1>{characterName} GoobIO</h1>
+                <h1>{mountScore} goobIO contribution from mounts</h1>
+                <h1>{mythicScore} goobIO contribution from Dungeons</h1>
+                <h1>{petScore} goobIO contribution from pets</h1>
                 <h1>{totalScore}</h1>
+                <img src={characterBanner} className="rounded-lg drop-shadow-lg"></img>
+
             </main>
 
             <footer className="flex h-24 w-full items-center justify-center border-t">
@@ -51,6 +57,7 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore }: go
 //handle types of the token, the results to pass to the page 
 export async function getServerSideProps(context: any) {
 
+
     const { server, char } = context.params
     console.log("your char query: ", server, char)
     const data: token = await createAccessToken()
@@ -64,8 +71,8 @@ export async function getServerSideProps(context: any) {
         }
     }
     const test = await results.json()
-    let currRating: number =  0
-    if(test.current_mythic_rating !== undefined ){
+    let currRating: number = 0
+    if (test.current_mythic_rating !== undefined) {
         currRating = test.current_mythic_rating.rating
     }
     const mountUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/collections/mounts?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
@@ -77,11 +84,45 @@ export async function getServerSideProps(context: any) {
     }
     const mounts = await mountResults.json()
 
+
+    const mediaUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/character-media?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
+    const mediaResults = await fetch(mediaUrl)
+    if (mediaResults.status === 404) {
+        return {
+            notFound: true,
+        }
+    }
+    const media = await mediaResults.json()
+
+
+    const petsUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/collections/pets?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
+    const petsResults = await fetch(petsUrl)
+    if (petsResults.status === 404) {
+        return {
+            notFound: true,
+        }
+    }
+    const pets = await petsResults.json()
+
+
     const mountScore = mounts.mounts.length
     const mythicScore = Math.floor(currRating)
-    const totalScore = Math.floor(mounts.mounts.length + currRating)
+    //assets[2] is the main portrait of the character
+    const characterBanner = media.assets[2].value
+
+    let petScore = 0
+    pets.pets.map((pet: any) => {
+        let countedPets = pet.level === 25 && pet.quality.name == "Rare"
+        if (countedPets) {
+           
+            petScore += 1
+        }
+    })
+    const totalScore = Math.floor(mounts.mounts.length + currRating + petScore)
+
+    const characterName = char
 
     // Pass data to the page via props
-    return { props: { mountScore, mythicScore, totalScore } }
+    return { props: { mountScore, mythicScore, totalScore, characterName, characterBanner, petScore } }
 }
 export default character
