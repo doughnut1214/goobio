@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.bad-score {
+    @apply text-gray-500 hover:text-gray-400
+}
+
+.average-score {
+    @apply text-green-500 hover:text-green-400
+}
+.good-score {
+    @apply text-blue-500 hover:text-blue-400
+}
+.epic-score {
+    @apply text-purple-500 hover:text-purple-400
+}
+.great-score {
+    @apply text-orange-500 hover:text-orange-400 animate-pulse
+}

@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Context } from "react";
+import { Context, useEffect, useState } from "react";
 import createAccessToken, { token } from "../../auth/auth";
 
 type goobIO = {
@@ -16,9 +16,30 @@ type goobIO = {
     petScore: number
 }
 const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, characterName, characterBanner, petScore }: goobIO) => {
+    //scoreStyle is the string of classes to apply to the total score
+    const [scoreStyle, setScoreStyle] = useState<string>('')
 
+    //determines the scoreStyle string based on conditionals
+    const determineColor = () => {
 
+        if (totalScore <= 500) {
+            return setScoreStyle("bad-score")
+        }
+        if (totalScore <= 1500) {
+            return setScoreStyle("average-score")
+        }
+        if (totalScore <= 2500) {
+            return setScoreStyle("good-score")
+        }
+        if (totalScore <= 3000) {
+            return setScoreStyle("epic-score")
+        }
+        return setScoreStyle("great-score")
 
+    }
+    useEffect(() => {
+        determineColor()
+    }, [])
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center py-2">
@@ -29,10 +50,10 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, char
 
             <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
                 <h1>{characterName} GoobIO</h1>
-                <h1>{mountScore} goobIO contribution from mounts</h1>
-                <h1>{mythicScore} goobIO contribution from Dungeons</h1>
-                <h1>{petScore} goobIO contribution from pets</h1>
-                <h1>{totalScore}</h1>
+                <h1><b>{mountScore}</b>  goobIO contribution from mounts</h1>
+                <h1><b>{mythicScore}</b>   goobIO contribution from Dungeons</h1>
+                <h1><b>{petScore}</b> goobIO contribution from pets</h1>
+                <h1 className={scoreStyle}><b>{totalScore}</b></h1>
                 <img src={characterBanner} className="rounded-lg drop-shadow-lg"></img>
 
             </main>
@@ -53,6 +74,7 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, char
 }
 
 
+
 //this is an example of an API response, but this thing is FAT, cannot send entire result and still remain performant
 //handle types of the token, the results to pass to the page 
 export async function getServerSideProps(context: any) {
@@ -64,17 +86,19 @@ export async function getServerSideProps(context: any) {
     console.log("token", data)
 
     const mythicPlusUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/mythic-keystone-profile?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
-    const results = await fetch(mythicPlusUrl)
-    if (results.status === 404) {
+    const dungeonResults = await fetch(mythicPlusUrl)
+    if (dungeonResults.status === 404) {
         return {
             notFound: true,
         }
     }
-    const test = await results.json()
+    const dungeons = await dungeonResults.json()
+
     let currRating: number = 0
-    if (test.current_mythic_rating !== undefined) {
-        currRating = test.current_mythic_rating.rating
+    if (dungeons.current_mythic_rating !== undefined) {
+        currRating = dungeons.current_mythic_rating.rating
     }
+
     const mountUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/collections/mounts?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
     const mountResults = await fetch(mountUrl)
     if (mountResults.status === 404) {
@@ -114,7 +138,7 @@ export async function getServerSideProps(context: any) {
     pets.pets.map((pet: any) => {
         let countedPets = pet.level === 25 && pet.quality.name == "Rare"
         if (countedPets) {
-           
+
             petScore += 1
         }
     })
