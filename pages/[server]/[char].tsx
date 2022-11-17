@@ -4,16 +4,18 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Context, useEffect, useState } from "react";
+import Profile from "../../components/Profile";
 import createAccessToken, { token } from "../../auth/auth";
 
-type goobIO = {
+export type goobIO = {
     totalScore: number,
     mythicScore: number,
     mountScore: number,
     characterName: string,
     //character banner
     characterBanner: string,
-    petScore: number
+    petScore: number,
+    scoreStyle?: string
 }
 const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, characterName, characterBanner, petScore }: goobIO) => {
     //scoreStyle is the string of classes to apply to the total score
@@ -49,12 +51,9 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, char
             </Head>
 
             <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-                <h1>{characterName} GoobIO</h1>
-                <h1><b>{mountScore}</b>  goobIO contribution from mounts</h1>
-                <h1><b>{mythicScore}</b>   goobIO contribution from Dungeons</h1>
-                <h1><b>{petScore}</b> goobIO contribution from pets</h1>
-                <h1 className={scoreStyle}><b>{totalScore}</b></h1>
-                <img src={characterBanner} className="rounded-lg drop-shadow-lg"></img>
+               
+                <Profile characterBanner={characterBanner} mountScore={mountScore} mythicScore={mythicScore}
+                    petScore={petScore} totalScore={totalScore} characterName={characterName} scoreStyle={scoreStyle} />
 
             </main>
 
