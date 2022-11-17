@@ -1,5 +1,5 @@
 import { goobIO } from "../pages/[server]/[char]"
-const Profile = ({totalScore, mythicScore, mountScore, characterName, characterBanner, petScore, scoreStyle}: goobIO) => {
+const Profile = ({ totalScore, mythicScore, mountScore, characterName, characterBanner, petScore, scoreStyle }: goobIO) => {
 
     return (
         <div className="relative bg-white dark:bg-gray-800 p-4">
@@ -10,9 +10,9 @@ const Profile = ({totalScore, mythicScore, mountScore, characterName, characterB
                     </h4>
                     <ul className="mt-10">
                         <li>
-                            <div className="flex">
+                            <div className="flex hover:bg-gray-100 p-2">
                                 <div className="flex-shrink-0">
-                                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                                    <div className="flex items-center justify-center h-12 w-12 rounded-md text-white">
                                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                             width="188.902px" height="188.902px" viewBox="0 0 188.902 188.902" enableBackground="0 0 188.902 188.902"
                                             xmlSpace="preserve">
@@ -48,11 +48,11 @@ const Profile = ({totalScore, mythicScore, mountScore, characterName, characterB
                             </div>
                         </li>
                         <li className="mt-10">
-                            <div className="flex">
+                            <div className="flex  hover:bg-gray-100 p-2">
                                 <div className="flex-shrink-0">
-                                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                                    <div className="flex items-center justify-center h-12 w-12 rounded-md text-white">
                                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                            viewBox="0 0 512 512" enableBackground= "0 0 512 512" xmlSpace="preserve">
+                                            viewBox="0 0 512 512" enableBackground="0 0 512 512" xmlSpace="preserve">
                                             <g>
                                                 <g>
                                                     <path d="M486.394,291.69L512,285.75l-7.543-32.529l-20.412,4.734c-2.477-17.576-6.872-35.028-13.06-51.972
@@ -86,9 +86,9 @@ const Profile = ({totalScore, mythicScore, mountScore, characterName, characterB
                             </div>
                         </li>
                         <li className="mt-10">
-                            <div className="flex">
+                            <div className="flex  hover:bg-gray-100 p-2">
                                 <div className="flex-shrink-0">
-                                    <div className="flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                                    <div className="flex items-center justify-center h-12 w-12 rounded-md  text-white">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 295.771 295.771" xmlnsXlink="http://www.w3.org/1999/xlink" enableBackground="new 0 0 295.771 295.771">
                                             <g>
                                                 <path d="m257.764,224.086c-0.888-4.686-3.166-8.996-6.538-12.368l-26.112-26.112c2.88,22.33 9.967,56.375 14.155,75.647l20.943,3.967c1.249,0.237 2.535-0.16 3.434-1.059 0.899-0.899 1.296-2.185 1.059-3.434l-6.941-36.641z" />
@@ -116,7 +116,7 @@ const Profile = ({totalScore, mythicScore, mountScore, characterName, characterB
                     </ul>
                 </div>
                 <div className="mt-10 -mx-4 md:-mx-12 relative lg:mt-0 lg:col-start-1">
-                    <img src={characterBanner} className="rounded-lg drop-shadow-lg"/>
+                    <img src={characterBanner} className="rounded-lg drop-shadow-lg" />
                 </div>
             </div>
 

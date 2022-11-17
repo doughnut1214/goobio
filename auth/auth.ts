@@ -8,7 +8,7 @@ export type token = {
     token_type: string,
     expires_in: number,
     sub: string
-  }
+}
 export default function createAccessToken(region = 'us') {
     return new Promise<token>((resolve, reject) => {
         let credentials = Buffer.from(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`);

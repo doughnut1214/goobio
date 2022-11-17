@@ -2,14 +2,37 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import nextSession from 'next-session'
-
-
-
-import createAccessToken from '../auth/auth'
+import React, { useEffect, useState } from 'react'
 const Home: NextPage = () => {
- 
+
+  type form = {
+    server: string | undefined,
+    character: string | undefined
+  }
+  const [formData, setFormData] = useState<form>({
+    server: '',
+    character: ''
+  })
+  useEffect(() => {
+
+  }, [])
+  const HandleServerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    setFormData({ ...formData, server: e.target.value })
 
 
+  }
+  const HandleCharacterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    setFormData({ ...formData, character: e.target.value })
+
+
+  }
+  const HandleSubmit = (e: any) => {
+    e.preventDefault()
+    console.log("submissions:", formData)
+    //todo: redirect to /server/char
+  }
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
@@ -19,7 +42,17 @@ const Home: NextPage = () => {
 
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
         <h1>GoobIO</h1>
-        
+        <form onSubmit={HandleSubmit}>
+          <div>
+            <label htmlFor='server'>US Realm</label>
+            <input type="text" name="server" onChange={HandleServerChange} />
+          </div>
+          <div>
+            <label htmlFor='character'>Character</label>
+            <input type="text" name="character" onChange={HandleCharacterChange} />
+          </div>
+          <button type='submit'>Look up</button>
+        </form>
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center border-t">

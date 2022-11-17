@@ -15,6 +15,7 @@ export type goobIO = {
     //character banner
     characterBanner: string,
     petScore: number,
+    //pass the goobIO color to the profile 
     scoreStyle?: string
 }
 const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, characterName, characterBanner, petScore }: goobIO) => {
