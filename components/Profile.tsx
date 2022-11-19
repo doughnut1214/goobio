@@ -1,6 +1,10 @@
+import { useEffect, useState } from "react"
 import { goobIO } from "../pages/[server]/[char]"
 const Profile = ({ totalScore, mythicScore, mountScore, characterName, characterBanner, petScore, scoreStyle }: goobIO) => {
+    
+    useEffect(()=>{
 
+    }, [totalScore, mythicScore, mountScore, characterName, characterBanner, petScore, scoreStyle])
     return (
         <div className="relative bg-white dark:bg-gray-800 p-4">
             <div className="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-12 lg:items-center">
@@ -10,7 +14,7 @@ const Profile = ({ totalScore, mythicScore, mountScore, characterName, character
                     </h4>
                     <ul className="mt-10">
                         <li>
-                            <div className="flex hover:bg-gray-100 p-2">
+                            <div className="flex hover:bg-gray-100 p-2  hover:scale-110">
                                 <div className="flex-shrink-0">
                                     <div className="flex items-center justify-center h-12 w-12 rounded-md text-white">
                                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -37,7 +41,7 @@ const Profile = ({ totalScore, mythicScore, mountScore, characterName, character
                                         </svg>
                                     </div>
                                 </div>
-                                <div className="ml-4">
+                                <div className="ml-4 ">
                                     <h5 className="text-lg leading-6 text-gray-900 text-left dark:text-white font-bold">
                                         {mountScore}
                                     </h5>
@@ -48,7 +52,7 @@ const Profile = ({ totalScore, mythicScore, mountScore, characterName, character
                             </div>
                         </li>
                         <li className="mt-10">
-                            <div className="flex  hover:bg-gray-100 p-2">
+                            <div className="flex  hover:bg-gray-100 p-2 hover:scale-110">
                                 <div className="flex-shrink-0">
                                     <div className="flex items-center justify-center h-12 w-12 rounded-md text-white">
                                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -86,7 +90,7 @@ const Profile = ({ totalScore, mythicScore, mountScore, characterName, character
                             </div>
                         </li>
                         <li className="mt-10">
-                            <div className="flex  hover:bg-gray-100 p-2">
+                            <div className="flex  hover:bg-gray-100 p-2 hover:scale-110">
                                 <div className="flex-shrink-0">
                                     <div className="flex items-center justify-center h-12 w-12 rounded-md  text-white">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 295.771 295.771" xmlnsXlink="http://www.w3.org/1999/xlink" enableBackground="new 0 0 295.771 295.771">
