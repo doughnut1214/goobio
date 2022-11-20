@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { useRouter } from "next/router"
 import Router from "next/router"
 const CharacterForm = () => {
     type form = {
@@ -10,9 +11,15 @@ const CharacterForm = () => {
         character: ''
     })
     const [loading, setLoading] = useState<boolean>(false)
+    const router = useRouter()
     useEffect(() => {
+       
+        router.events.on("routeChangeComplete", () => {
+            setLoading(false)
+            setFormData({ server: '', character: '' })
 
-    }, [])
+        })
+    }, [router.events])
     const HandleServerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
         setFormData({ ...formData, server: e.target.value })
@@ -32,17 +39,16 @@ const CharacterForm = () => {
         Router.push(`/${formData.server?.toLowerCase()}/${formData.character?.toLowerCase()}`)
 
 
-
     }
     return (
-        <form onSubmit={HandleSubmit} className="flex flex-col lg:flex-row justify-center items-center">
+        <form onSubmit={HandleSubmit} className="flex flex-col lg:flex-row justify-center items-center px-2">
             <div>
                 <label htmlFor='server'>US Realm</label>
-                <input type="text" name="server" className='mx-1 rounded-lg p-1  border border-slate-400 disabled:bg-slate-300' disabled={loading} onChange={HandleServerChange} required />
+                <input type="text" name="server" value={formData.server} className='mx-1 rounded-lg p-1  border text-black border-slate-400 disabled:bg-slate-300' disabled={loading} onChange={HandleServerChange} required />
             </div>
             <div>
                 <label htmlFor='character'>Character</label>
-                <input type="text" name="character" className='mx-1 rounded-lg p-1 border border-slate-400 disabled:bg-slate-300' disabled={loading} onChange={HandleCharacterChange} required />
+                <input type="text" name="character" value={formData.character} className='mx-1 rounded-lg p-1 border text-black border-slate-400 disabled:bg-slate-300' disabled={loading} onChange={HandleCharacterChange} required />
             </div>
             <button type='submit' className=" rounded-lg p-2 text-white bg-slate-400 disabled:bg-slate-300 hover:bg-slate-300" disabled={loading}>{loading ? "Loading..." : "Lookup"}</button>
         </form>

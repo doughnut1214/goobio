@@ -4,18 +4,18 @@ import Image from 'next/image'
 import Router from 'next/router'
 import nextSession from 'next-session'
 import CharacterForm from '../components/CharacterForm'
-
+import Header from '../components/Header'
 import React, { useEffect, useState } from 'react'
 const Home: NextPage = () => {
 
   
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="flex min-h-screen flex-col items-center justify-center">
       <Head>
         <title>GoobIO</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <Header />
       <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
         <h1>GoobIO</h1>
         <CharacterForm />

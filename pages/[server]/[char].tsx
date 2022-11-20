@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { Context, useEffect, useState } from "react";
 import Profile from "../../components/Profile";
 import createAccessToken, { token } from "../../auth/auth";
-
+import Header from "../../components/Header";
 export type goobIO = {
     totalScore: number,
     mythicScore: number,
@@ -42,17 +42,17 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, char
     }
     useEffect(() => {
         determineColor()
-    }, [])
+    }, [mountScore, mythicScore, totalScore, characterName, characterBanner, petScore])
 
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center py-2">
+        <div className="flex min-h-screen flex-col items-center justify-center">
             <Head>
                 <title>GoobIO</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
+            <Header />
             <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-               
+
                 <Profile characterBanner={characterBanner} mountScore={mountScore} mythicScore={mythicScore}
                     petScore={petScore} totalScore={totalScore} characterName={characterName} scoreStyle={scoreStyle} />
 
@@ -73,6 +73,22 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, char
     )
 }
 
+const fetcher = async (url: string): Promise<any> => {
+    try {
+        const results = await fetch(url)
+        
+
+        if (!results.ok) throw new Error
+        return results.json()
+    } catch (error) {
+        return {
+            notFound: true,
+        }
+    }
+
+
+
+}
 
 
 //this is an example of an API response, but this thing is FAT, cannot send entire result and still remain performant
@@ -86,13 +102,7 @@ export async function getServerSideProps(context: any) {
     console.log("token", data)
 
     const mythicPlusUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/mythic-keystone-profile?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
-    const dungeonResults = await fetch(mythicPlusUrl)
-    if (dungeonResults.status === 404) {
-        return {
-            notFound: true,
-        }
-    }
-    const dungeons = await dungeonResults.json()
+    const dungeons = await fetcher(mythicPlusUrl)
 
     let currRating: number = 0
     if (dungeons.current_mythic_rating !== undefined) {
@@ -100,53 +110,45 @@ export async function getServerSideProps(context: any) {
     }
 
     const mountUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/collections/mounts?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
-    const mountResults = await fetch(mountUrl)
-    if (mountResults.status === 404) {
-        return {
-            notFound: true,
-        }
-    }
-    const mounts = await mountResults.json()
+    const mounts = await fetcher(mountUrl)
+
 
 
     const mediaUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/character-media?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
-    const mediaResults = await fetch(mediaUrl)
-    if (mediaResults.status === 404) {
-        return {
-            notFound: true,
-        }
-    }
-    const media = await mediaResults.json()
+    const media = await fetcher(mediaUrl)
+
 
 
     const petsUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/collections/pets?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
-    const petsResults = await fetch(petsUrl)
-    if (petsResults.status === 404) {
+    const pets = await fetcher(petsUrl)
+    
+    //if anything goes wrong here, return 404
+    try {
+        const mountScore = mounts.mounts?.length
+        const mythicScore = Math.floor(currRating)
+        //assets[2] is the main portrait of the character
+        const characterBanner = media.assets[2].value
+
+        let petScore = 0
+        pets.pets.map((pet: any) => {
+            let countedPets = pet.level === 25 && pet.quality.name == "Rare"
+            if (countedPets) {
+
+                petScore += 1
+            }
+        })
+        const totalScore = Math.floor(mounts.mounts.length + currRating + petScore)
+
+        const characterName = char
+
+
+        return { props: { mountScore, mythicScore, totalScore, characterName, characterBanner, petScore } }
+    } catch {
         return {
-            notFound: true,
+            notFound: true
         }
     }
-    const pets = await petsResults.json()
+    // Pass data to the page via props, or in case of failure, return not found 
 
-
-    const mountScore = mounts.mounts.length
-    const mythicScore = Math.floor(currRating)
-    //assets[2] is the main portrait of the character
-    const characterBanner = media.assets[2].value
-
-    let petScore = 0
-    pets.pets.map((pet: any) => {
-        let countedPets = pet.level === 25 && pet.quality.name == "Rare"
-        if (countedPets) {
-
-            petScore += 1
-        }
-    })
-    const totalScore = Math.floor(mounts.mounts.length + currRating + petScore)
-
-    const characterName = char
-
-    // Pass data to the page via props
-    return { props: { mountScore, mythicScore, totalScore, characterName, characterBanner, petScore } }
 }
 export default character
