@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { goobIO } from "../pages/[server]/[char]"
+import Image from "next/image"
 const Profile = ({ totalScore, mythicScore, mountScore, characterName, characterBanner, petScore, scoreStyle }: goobIO) => {
     
     useEffect(()=>{
@@ -120,6 +121,7 @@ const Profile = ({ totalScore, mythicScore, mountScore, characterName, character
                     </ul>
                 </div>
                 <div className="mt-10 -mx-4 md:-mx-12 relative lg:mt-0 lg:col-start-1">
+                    
                     <img src={characterBanner} className="rounded-lg drop-shadow-lg" />
                 </div>
             </div>

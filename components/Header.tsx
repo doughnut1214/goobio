@@ -3,7 +3,7 @@ import Router from "next/router"
 import React from "react"
 const Header = () => {
 
-    const HandleClick = (e: any) => {
+    const HandleClick = (e: React.MouseEvent<HTMLElement>) => {
         Router.push("/")
     }
     return (

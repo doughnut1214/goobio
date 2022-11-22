@@ -94,7 +94,7 @@ const fetcher = async (url: string): Promise<any> => {
 //this is an example of an API response, but this thing is FAT, cannot send entire result and still remain performant
 //handle types of the token, the results to pass to the page 
 export async function getServerSideProps(context: any) {
-
+    
 
     const { server, char } = context.params
     console.log("your char query: ", server, char)

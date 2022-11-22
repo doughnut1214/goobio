@@ -41,7 +41,7 @@ const CharacterForm = () => {
 
     }
     return (
-        <form onSubmit={HandleSubmit} className="flex flex-col lg:flex-row justify-center items-center px-2">
+        <form onSubmit={HandleSubmit} className="flex flex-col lg:flex-row justify-center items-center px-3">
             <div>
                 <label htmlFor='server'>US Realm</label>
                 <input type="text" name="server" value={formData.server} className='mx-1 rounded-lg p-1  border text-black border-slate-400 disabled:bg-slate-300' disabled={loading} onChange={HandleServerChange} required />
