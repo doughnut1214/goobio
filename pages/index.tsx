@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         <div className="sm:flex flex-wrap justify-center items-center text-center gap-8">
           <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 py-4 bg-white mt-6 hover:scale-110  shadow-lg rounded-lg dark:bg-gray-800">
             <div className="flex-shrink-0">
-              <div className="flex items-center mx-auto justify-center h-12 w-12 rounded-md text-white">
+              <div className="flex items-center mx-auto justify-center h-12 w-12 rounded-md text-white dark:bg-white">
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                   width="188.902px" height="188.902px" viewBox="0 0 188.902 188.902" enableBackground="0 0 188.902 188.902"
                   xmlSpace="preserve">
@@ -52,7 +52,7 @@ const Home: NextPage = () => {
           </div>
           <div className="w-full hover:scale-110 sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 py-4 mt-6 sm:mt-16 md:mt-20 lg:mt-24 bg-white shadow-lg rounded-lg dark:bg-gray-800">
             <div className="flex-shrink-0">
-              <div className="flex items-center mx-auto justify-center h-12 w-12 rounded-md  text-white">
+              <div className="flex items-center mx-auto justify-center h-12 w-12 rounded-md  text-white  dark:bg-white">
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                   viewBox="0 0 512 512" enableBackground="0 0 512 512" xmlSpace="preserve">
                   <g>
@@ -86,7 +86,7 @@ const Home: NextPage = () => {
           </div>
           <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 mt-6  px-4 py-4 hover:scale-110 bg-white shadow-lg rounded-lg dark:bg-gray-800">
             <div className="flex-shrink-0">
-              <div className="flex items-center mx-auto justify-center h-12 w-12 rounded-md  text-white">
+              <div className="flex items-center mx-auto justify-center h-12 w-12 rounded-md  text-white  dark:bg-white">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 295.771 295.771" xmlnsXlink="http://www.w3.org/1999/xlink" enableBackground="new 0 0 295.771 295.771">
                   <g>
                     <path d="m257.764,224.086c-0.888-4.686-3.166-8.996-6.538-12.368l-26.112-26.112c2.88,22.33 9.967,56.375 14.155,75.647l20.943,3.967c1.249,0.237 2.535-0.16 3.434-1.059 0.899-0.899 1.296-2.185 1.059-3.434l-6.941-36.641z" />

@@ -7,17 +7,17 @@ const Profile = ({ totalScore, mythicScore, mountScore, characterName, character
 
     }, [totalScore, mythicScore, mountScore, characterName, characterBanner, petScore, scoreStyle])
     return (
-        <div className="relative bg-white dark:bg-gray-800 p-4">
+        <div className="relative bg-white  p-4">
             <div className="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-12 lg:items-center">
                 <div className="lg:col-start-2 md:pl-20">
-                    <h4 className="text-2xl leading-8 font-extrabold text-gray-900 dark:text-white tracking-tight sm:leading-9">
+                    <h4 className="text-2xl leading-8 font-extrabold text-gray-900  tracking-tight sm:leading-9">
                         {characterName}: <span className={scoreStyle}>{totalScore}</span> GOOBIO
                     </h4>
                     <ul className="mt-10">
                         <li>
-                            <div className="flex hover:bg-gray-100 p-2  hover:scale-110">
+                            <div className="flex hover:bg-gray-100 p-2  hover:scale-110 dark:bg-gray-800 dark:text-white  hover:dark:bg-gray-700 rounded-lg">
                                 <div className="flex-shrink-0">
-                                    <div className="flex items-center justify-center h-12 w-12 rounded-md text-white">
+                                    <div className="flex items-center justify-center h-12 w-12 rounded-md text-white dark:bg-white">
                                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                             width="188.902px" height="188.902px" viewBox="0 0 188.902 188.902" enableBackground="0 0 188.902 188.902"
                                             xmlSpace="preserve">
@@ -53,9 +53,9 @@ const Profile = ({ totalScore, mythicScore, mountScore, characterName, character
                             </div>
                         </li>
                         <li className="mt-10">
-                            <div className="flex  hover:bg-gray-100 p-2 hover:scale-110">
+                            <div className="flex  hover:bg-gray-100 p-2 hover:scale-110 dark:bg-gray-800 dark:text-white  hover:dark:bg-gray-700 rounded-lg">
                                 <div className="flex-shrink-0">
-                                    <div className="flex items-center justify-center h-12 w-12 rounded-md text-white">
+                                    <div className="flex items-center justify-center h-12 w-12 rounded-md text-white  dark:bg-white">
                                         <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                             viewBox="0 0 512 512" enableBackground="0 0 512 512" xmlSpace="preserve">
                                             <g>
@@ -91,9 +91,9 @@ const Profile = ({ totalScore, mythicScore, mountScore, characterName, character
                             </div>
                         </li>
                         <li className="mt-10">
-                            <div className="flex  hover:bg-gray-100 p-2 hover:scale-110">
+                            <div className="flex  hover:bg-gray-100 p-2 hover:scale-110 dark:bg-gray-800 dark:text-white hover:dark:bg-gray-700 rounded-lg">
                                 <div className="flex-shrink-0">
-                                    <div className="flex items-center justify-center h-12 w-12 rounded-md  text-white">
+                                    <div className="flex items-center justify-center h-12 w-12 rounded-md  text-white  dark:bg-white">
                                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 295.771 295.771" xmlnsXlink="http://www.w3.org/1999/xlink" enableBackground="new 0 0 295.771 295.771">
                                             <g>
                                                 <path d="m257.764,224.086c-0.888-4.686-3.166-8.996-6.538-12.368l-26.112-26.112c2.88,22.33 9.967,56.375 14.155,75.647l20.943,3.967c1.249,0.237 2.535-0.16 3.434-1.059 0.899-0.899 1.296-2.185 1.059-3.434l-6.941-36.641z" />
