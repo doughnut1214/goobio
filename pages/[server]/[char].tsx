@@ -59,14 +59,8 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, char
             </main>
 
             <footer className="flex h-24 w-full items-center justify-center border-t">
-                <a
-                    className="flex items-center justify-center gap-2"
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by{' '}
-                    <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+                <a className="flex items-center justify-center gap-2" href="/" rel="noopener noreferrer">
+                    <span className="font-bold">GoobIO</span>
                 </a>
             </footer>
         </div>
@@ -76,7 +70,7 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, char
 const fetcher = async (url: string): Promise<any> => {
     try {
         const results = await fetch(url)
-        
+
 
         if (!results.ok) throw new Error
         return results.json()
@@ -94,7 +88,7 @@ const fetcher = async (url: string): Promise<any> => {
 //this is an example of an API response, but this thing is FAT, cannot send entire result and still remain performant
 //handle types of the token, the results to pass to the page 
 export async function getServerSideProps(context: any) {
-    
+
 
     const { server, char } = context.params
     console.log("your char query: ", server, char)
@@ -121,7 +115,7 @@ export async function getServerSideProps(context: any) {
 
     const petsUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/collections/pets?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
     const pets = await fetcher(petsUrl)
-    
+
     //if anything goes wrong here, return 404
     try {
         const mountScore = mounts.mounts?.length

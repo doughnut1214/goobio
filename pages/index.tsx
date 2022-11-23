@@ -20,7 +20,7 @@ const Home: NextPage = () => {
         <h1 className='text-3xl font-extrabold text-black dark:text-white sm:text-4xl'>GoobIO</h1>
 
         <div className="sm:flex flex-wrap justify-center items-center text-center gap-8">
-          <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 py-4 bg-white mt-6  shadow-lg rounded-lg dark:bg-gray-800">
+          <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 py-4 bg-white mt-6 hover:scale-110  shadow-lg rounded-lg dark:bg-gray-800">
             <div className="flex-shrink-0">
               <div className="flex items-center mx-auto justify-center h-12 w-12 rounded-md text-white">
                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
               Tally up those hard-earned mounts
             </p>
           </div>
-          <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 py-4 mt-6 sm:mt-16 md:mt-20 lg:mt-24 bg-white shadow-lg rounded-lg dark:bg-gray-800">
+          <div className="w-full hover:scale-110 sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 py-4 mt-6 sm:mt-16 md:mt-20 lg:mt-24 bg-white shadow-lg rounded-lg dark:bg-gray-800">
             <div className="flex-shrink-0">
               <div className="flex items-center mx-auto justify-center h-12 w-12 rounded-md  text-white">
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -88,7 +88,7 @@ const Home: NextPage = () => {
               Measure your dedication and prowess in pet collecting
             </p>
           </div>
-          <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 mt-6  px-4 py-4 bg-white shadow-lg rounded-lg dark:bg-gray-800">
+          <div className="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 mt-6  px-4 py-4 hover:scale-110 bg-white shadow-lg rounded-lg dark:bg-gray-800">
             <div className="flex-shrink-0">
               <div className="flex items-center mx-auto justify-center h-12 w-12 rounded-md  text-white">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 295.771 295.771" xmlnsXlink="http://www.w3.org/1999/xlink" enableBackground="new 0 0 295.771 295.771">
@@ -118,14 +118,8 @@ const Home: NextPage = () => {
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+        <a className="flex items-center justify-center gap-2" href="/" rel="noopener noreferrer">
+          <span className="font-bold">GoobIO</span>
         </a>
       </footer>
     </div>
