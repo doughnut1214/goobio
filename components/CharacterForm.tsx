@@ -44,11 +44,11 @@ const CharacterForm = () => {
         <form onSubmit={HandleSubmit} className="flex flex-col lg:flex-row justify-center items-center px-3">
             <div>
                 <label htmlFor='server'>US Realm</label>
-                <input type="text" name="server" value={formData.server} className='mx-1 rounded-lg p-1  border text-black border-slate-400 disabled:bg-slate-300' disabled={loading} onChange={HandleServerChange} required />
+                <input type="text" name="server" value={formData.server} aria-label="Server" className='mx-1 rounded-lg p-1  border text-black border-slate-400 disabled:bg-slate-300' disabled={loading} onChange={HandleServerChange} required />
             </div>
             <div>
                 <label htmlFor='character'>Character</label>
-                <input type="text" name="character" value={formData.character} className='mx-1 rounded-lg p-1 border text-black border-slate-400 disabled:bg-slate-300' disabled={loading} onChange={HandleCharacterChange} required />
+                <input type="text" name="character" value={formData.character} aria-label="Character" className='mx-1 rounded-lg p-1 border text-black border-slate-400 disabled:bg-slate-300' disabled={loading} onChange={HandleCharacterChange} required />
             </div>
             <button type='submit' className=" rounded-lg p-2 text-white bg-slate-400 disabled:bg-slate-300 hover:bg-slate-300" disabled={loading}>{loading ? "Loading..." : "Lookup"}</button>
         </form>

@@ -1,9 +1,6 @@
-import { NOTFOUND } from "dns";
 import { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { Context, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import Profile from "../../components/Profile";
 import createAccessToken, { token } from "../../auth/auth";
 import Header from "../../components/Header";

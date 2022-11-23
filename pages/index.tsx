@@ -1,11 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import Router from 'next/router'
-import nextSession from 'next-session'
-import CharacterForm from '../components/CharacterForm'
 import Header from '../components/Header'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 const Home: NextPage = () => {
 
 
