@@ -6,7 +6,7 @@ const Home: NextPage = () => {
 
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
+    <div className="flex min-h-screen flex-col items-center justify-center dark:bg-gray-900">
       <Head>
         <title>GoobIO</title>
         <link rel="icon" href="/favicon.ico" />
@@ -115,7 +115,7 @@ const Home: NextPage = () => {
 
       <footer className="flex h-24 w-full items-center justify-center border-t">
         <a className="flex items-center justify-center gap-2" href="/" rel="noopener noreferrer">
-          <span className="font-bold">GoobIO</span>
+          <span className="font-bold dark:text-white">GoobIO</span>
         </a>
       </footer>
     </div>

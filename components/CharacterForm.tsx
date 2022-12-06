@@ -36,7 +36,7 @@ const CharacterForm = () => {
         setLoading(true)
         e.preventDefault()
         console.log("submissions:", formData)
-        Router.push(`/${formData.server?.toLowerCase()}/${formData.character?.toLowerCase()}`)
+        Router.push(`/${formData.server?.toLowerCase().replace('\'', '')}/${formData.character?.toLowerCase()}`)
 
 
     }

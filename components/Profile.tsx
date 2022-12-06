@@ -7,10 +7,10 @@ const Profile = ({ totalScore, mythicScore, mountScore, characterName, character
 
     }, [totalScore, mythicScore, mountScore, characterName, characterBanner, petScore, scoreStyle])
     return (
-        <div className="relative bg-white  p-4">
+        <div className="relative bg-white dark:bg-gray-900  p-4 ">
             <div className="lg:grid lg:grid-flow-row-dense lg:grid-cols-2 lg:gap-12 lg:items-center">
                 <div className="lg:col-start-2 md:pl-20">
-                    <h4 className="text-2xl leading-8 font-extrabold text-gray-900  tracking-tight sm:leading-9">
+                    <h4 className="text-2xl leading-8 font-extrabold text-gray-900 dark:text-white  tracking-tight sm:leading-9">
                         {characterName}: <span className={scoreStyle}>{totalScore}</span> GOOBIO
                     </h4>
                     <ul className="mt-10">
