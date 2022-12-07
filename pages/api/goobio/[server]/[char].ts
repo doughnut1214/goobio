@@ -29,7 +29,7 @@ export default async function handler(
         return
     }
     if (req.method !== 'GET') {
-        res.status(402).json({ message: "Method forbidden. Please use GET" })
+        res.status(403).json({ message: "Method forbidden. Please use GET" })
         return
     }
     const data: token = await createAccessToken()
