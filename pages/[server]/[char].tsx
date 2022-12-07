@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Profile from "../../components/Profile";
 import createAccessToken, { token } from "../../auth/auth";
 import Header from "../../components/Header";
@@ -80,19 +80,11 @@ const fetcher = async (url: string): Promise<any> => {
 
 
 }
+export const calculateGoobio = async (server: string, char: string, token: token): Promise<any> => {
 
-
-//this is an example of an API response, but this thing is FAT, cannot send entire result and still remain performant
-//handle types of the token, the results to pass to the page 
-export async function getServerSideProps(context: any) {
-
-
-    const { server, char } = context.params
-    console.log("your char query: ", server, char)
-    const data: token = await createAccessToken()
-    console.log("token", data)
-
-    const mythicPlusUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/mythic-keystone-profile?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
+    const serverInput = server.toLowerCase().replace(`\'`, '')
+    const nameInput = char.toLowerCase()
+    const mythicPlusUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${char}/mythic-keystone-profile?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
     const dungeons = await fetcher(mythicPlusUrl)
 
     let currRating: number = 0
@@ -100,21 +92,23 @@ export async function getServerSideProps(context: any) {
         currRating = dungeons.current_mythic_rating.rating
     }
 
-    const mountUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/collections/mounts?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
+    const mountUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${char}/collections/mounts?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
     const mounts = await fetcher(mountUrl)
 
 
 
-    const mediaUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/character-media?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
+    const mediaUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${char}/character-media?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
     const media = await fetcher(mediaUrl)
 
 
 
-    const petsUrl = `https://us.api.blizzard.com/profile/wow/character/${server}/${char}/collections/pets?namespace=profile-us&locale=en_US&access_token=${data.access_token}`
+    const petsUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${char}/collections/pets?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
     const pets = await fetcher(petsUrl)
 
     //if anything goes wrong here, return 404
     try {
+
+
         const mountScore = mounts.mounts?.length
         const mythicScore = Math.floor(currRating)
         //assets[2] is the main portrait of the character
@@ -131,7 +125,35 @@ export async function getServerSideProps(context: any) {
         const totalScore = Math.floor(mounts.mounts.length + currRating + petScore)
 
         const characterName = char
+        const result: goobIO = {
+            mythicScore: mythicScore,
+            mountScore: mountScore,
+            petScore: petScore,
+            totalScore: totalScore,
+            characterBanner: characterBanner,
+            characterName: characterName
+        }
+        return result
+    } catch (error) {
+        return null
+    }
+}
 
+
+
+//this is an example of an API response, but this thing is FAT, cannot send entire result and still remain performant
+//handle types of the token, the results to pass to the page 
+export async function getServerSideProps(context: any) {
+
+
+    const { server, char } = context.params
+    console.log("your char query: ", server, char)
+    const data: token = await createAccessToken()
+    try {
+        const results = await calculateGoobio(server, char, data)
+        //if anything goes wrong here, return 404
+        if(!results) throw new Error
+        const { mountScore, mythicScore, totalScore, characterName, characterBanner, petScore } = results
 
         return { props: { mountScore, mythicScore, totalScore, characterName, characterBanner, petScore } }
     } catch {
