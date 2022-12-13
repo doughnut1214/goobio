@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Profile from "../../components/Profile";
 import createAccessToken, { token } from "../../auth/auth";
 import Header from "../../components/Header";
+import Script from 'next/script'
 export type goobIO = {
     totalScore: number,
     mythicScore: number,
@@ -14,8 +15,9 @@ export type goobIO = {
     petScore: number,
     //pass the goobIO color to the profile 
     scoreStyle?: string
+    items?: any
 }
-const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, characterName, characterBanner, petScore }: goobIO) => {
+const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, characterName, characterBanner, petScore, items }: goobIO) => {
     //scoreStyle is the string of classes to apply to the total score
     const [scoreStyle, setScoreStyle] = useState<string>('')
 
@@ -39,19 +41,34 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, char
     }
     useEffect(() => {
         determineColor()
+        console.log("our items:", items)
     }, [mountScore, mythicScore, totalScore, characterName, characterBanner, petScore])
-
+    //todo: fix warnings with script from wowdb
     return (
         <div className="flex min-h-screen flex-col items-center justify-center dark:bg-gray-900">
             <Head>
                 <title>GoobIO</title>
                 <link rel="icon" href="/favicon.ico" />
+                <script src="//static-azeroth.cursecdn.com/current/js/syndication/tt.js" />
             </Head>
             <Header />
             <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
+                <div className="w-full min-h-screen mt-2">
+                    <Profile characterBanner={characterBanner} mountScore={mountScore} mythicScore={mythicScore}
+                        petScore={petScore} totalScore={totalScore} characterName={characterName} scoreStyle={scoreStyle} />
 
-                <Profile characterBanner={characterBanner} mountScore={mountScore} mythicScore={mythicScore}
-                    petScore={petScore} totalScore={totalScore} characterName={characterName} scoreStyle={scoreStyle} />
+                    <div className="bg-gray-300 my-3 p-3 justify-content-left items-start flex">
+                        {items.equipped_items.map((item: any, index: number)=>{
+                            return <a href={`https://www.wowdb.com/items/${item.item.id}`} key={index}>{`[${item.name}]`}</a>
+                        })}
+                    </div>
+
+                </div>
+
+
+
+
+
 
             </main>
 
@@ -104,9 +121,12 @@ export const calculateGoobio = async (server: string, char: string, token: token
         const petsUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${char}/collections/pets?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
         const pets = await fetcher(petsUrl)
 
+        const itemsUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${char}/equipment?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
+        const items = await fetcher(itemsUrl)
+        console.log("our items", items)
         //if anything goes wrong here, return 404
         let haveData = pets && media && mounts && dungeons
-        if(!haveData) throw new Error
+        if (!haveData) throw new Error
 
         const mountScore = mounts.mounts?.length
         const mythicScore = Math.floor(currRating)
@@ -130,7 +150,8 @@ export const calculateGoobio = async (server: string, char: string, token: token
             petScore: petScore,
             totalScore: totalScore,
             characterBanner: characterBanner,
-            characterName: characterName
+            characterName: characterName,
+            items: items
         }
         return result
     } catch (error) {
@@ -152,9 +173,9 @@ export async function getServerSideProps(context: any) {
         const results = await calculateGoobio(server, char, data)
         //if anything goes wrong here, return 404
         if (!results) throw new Error
-        const { mountScore, mythicScore, totalScore, characterName, characterBanner, petScore } = results
+        const { mountScore, mythicScore, totalScore, characterName, characterBanner, petScore, items } = results
 
-        return { props: { mountScore, mythicScore, totalScore, characterName, characterBanner, petScore } }
+        return { props: { mountScore, mythicScore, totalScore, characterName, characterBanner, petScore, items } }
     } catch {
         return {
             notFound: true
