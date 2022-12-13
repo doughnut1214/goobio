@@ -79,11 +79,11 @@ const fetcher = async (url: string): Promise<any> => {
 
 }
 export const calculateGoobio = async (server: string, char: string, token: token): Promise<any> => {
-
+    console.log("goobio inputs:", server, char, token)
     try {
         const serverInput = server.toLowerCase().replace(`\'`, '')
         const nameInput = char.toLowerCase()
-        const mythicPlusUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${char}/mythic-keystone-profile?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
+        const mythicPlusUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${nameInput}/mythic-keystone-profile?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
         const dungeons = await fetcher(mythicPlusUrl)
 
         let currRating: number = 0
@@ -91,17 +91,17 @@ export const calculateGoobio = async (server: string, char: string, token: token
             currRating = dungeons.current_mythic_rating.rating
         }
 
-        const mountUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${char}/collections/mounts?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
+        const mountUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${nameInput}/collections/mounts?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
         const mounts = await fetcher(mountUrl)
 
 
 
-        const mediaUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${char}/character-media?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
+        const mediaUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${nameInput}/character-media?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
         const media = await fetcher(mediaUrl)
 
 
 
-        const petsUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${char}/collections/pets?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
+        const petsUrl = `https://us.api.blizzard.com/profile/wow/character/${serverInput}/${nameInput}/collections/pets?namespace=profile-us&locale=en_US&access_token=${token.access_token}`
         const pets = await fetcher(petsUrl)
 
         //if anything goes wrong here, return 404
@@ -123,7 +123,7 @@ export const calculateGoobio = async (server: string, char: string, token: token
         })
         const totalScore = Math.floor(mounts.mounts.length + currRating + petScore)
 
-        const characterName = char
+        const characterName = nameInput
         const result: goobIO = {
             mythicScore: mythicScore,
             mountScore: mountScore,
