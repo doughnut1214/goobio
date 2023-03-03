@@ -34,8 +34,10 @@ const character: NextPage<goobIO> = ({ mountScore, mythicScore, totalScore, char
         if (totalScore <= 3000) {
             return setScoreStyle("epic-score")
         }
-        return setScoreStyle("great-score")
-
+        if (totalScore <= 3500) {
+            return setScoreStyle("great-score")
+        }
+        return setScoreStyle("artifact-score")
     }
     useEffect(() => {
         determineColor()
@@ -106,7 +108,7 @@ export const calculateGoobio = async (server: string, char: string, token: token
 
         //if anything goes wrong here, return 404
         let haveData = pets && media && mounts && dungeons
-        if(!haveData) throw new Error
+        if (!haveData) throw new Error
 
         const mountScore = mounts.mounts?.length
         const mythicScore = Math.floor(currRating)
