@@ -50,10 +50,13 @@ export default async function handler(
     else if (results.totalScore <= 3000) {
         results.scoreStyle = "Epic"
     }
-    else if(results.totalScore > 3000){
+    else if (results.totalScore <= 3500) {
         results.scoreStyle = "Legendary"
     }
-    
-    
+    else if (results.totalScore > 3500) {
+        results.scoreStyle = "Artifact"
+    }
+
+
     res.status(200).json(results)
 }
